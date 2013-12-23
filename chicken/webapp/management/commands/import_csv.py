@@ -1,5 +1,6 @@
 from datetime import datetime
 from django.core.management.base import BaseCommand
+from django.db.utils import IntegrityError
 from csv import reader
 from pytz import timezone
 
@@ -28,7 +29,12 @@ class Command(BaseCommand):
                            door_open=door_open,
                            motion_sensed=motion_sensed)
 
-            s.save()
+            try:
+                s.save()
+            except IntegrityError as e:
+                print 'Skipping %s' % row
+                print e
+
 
             if i % 100 == 0:
                 print 'Total Imported: %d' % i
