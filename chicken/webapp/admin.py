@@ -1,3 +1,9 @@
 from django.contrib import admin
 
-# Register your models here.
+from webapp.models import SensorData
+
+
+class SensorDataAdmin(admin.ModelAdmin):
+    list_display = ['timestamp', 'signal', 'door_open', 'motion_sensed']
+
+admin.site.register(SensorData, SensorDataAdmin)

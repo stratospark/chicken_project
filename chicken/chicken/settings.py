@@ -48,6 +48,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'webapp.middleware.TimezoneMiddleware'
+
 )
 
 ROOT_URLCONF = 'chicken.urls'
@@ -73,7 +75,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'US/Pacific'
 
 USE_I18N = True
 
