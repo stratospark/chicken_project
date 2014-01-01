@@ -24,6 +24,8 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
+TEMPLATE_DIRS = ('templates/')
+
 ALLOWED_HOSTS = []
 
 
@@ -88,3 +90,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+
+IPYTHON_ARGUMENTS = ['--ext', 'django_extensions.management.notebook_extension',
+                     '--pylab', 'inline']
