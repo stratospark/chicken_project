@@ -19,3 +19,12 @@ class ViewTests(TestCase):
         self.assertEqual(sd.signal, -91)
         self.assertEqual(sd.door_open, True)
         self.assertEqual(sd.motion_sensed, True)
+
+    def test_add_data_fail(self):
+        data_string = '2013-1,-91,D1,M1'
+        c = Client()
+        response = c.put('/add_data', data_string)
+        self.assertEqual(response.status_code, 400)
+        self.assertNotEqual(response.content, 'OK')
+
+        self.assertEqual(SensorData.objects.count(), 0)

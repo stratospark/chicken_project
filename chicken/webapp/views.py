@@ -1,3 +1,4 @@
+from django.db import Error
 from django.http import HttpResponse
 from django.shortcuts import render
 
@@ -26,4 +27,4 @@ def add_data(request):
         s.save()
         return HttpResponse('OK')
     except Exception as e: # TODO: catch a more specific exception
-        return HttpResponse('FAIL')
+        return HttpResponse(e, status=400)
