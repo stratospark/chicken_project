@@ -4,6 +4,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.template import loader, RequestContext
+from django.views.decorators.csrf import csrf_exempt
 from webapp.models import SensorData
 
 
@@ -20,6 +21,7 @@ def index(request):
     # return HttpResponse(output)
 
 
+@csrf_exempt
 def add_data(request):
     data_string = request.body
     try:
