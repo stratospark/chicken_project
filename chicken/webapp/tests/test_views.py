@@ -28,3 +28,8 @@ class ViewTests(TestCase):
         self.assertNotEqual(response.content, 'OK')
 
         self.assertEqual(SensorData.objects.count(), 0)
+
+    # def test_index(self):
+    #     c = Client()
+    #     response = c.get('/')
+    #     self.assertEqual(response.status_code , 200)
