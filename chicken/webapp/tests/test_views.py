@@ -1,4 +1,5 @@
 from django.test import TestCase, Client
+from model_mommy import mommy
 from webapp.models import SensorData
 
 
@@ -29,7 +30,10 @@ class ViewTests(TestCase):
 
         self.assertEqual(SensorData.objects.count(), 0)
 
-    # def test_index(self):
-    #     c = Client()
-    #     response = c.get('/')
-    #     self.assertEqual(response.status_code , 200)
+    def test_index(self):
+        sensor_data = mommy.make('SensorData', door_open=False)
+        c = Client()
+        response = c.get('/')
+        self.assertEqual(response.status_code , 200)
+        self.assertEqual(response.context['chickens_put_away'], True)
+        self.assertEqual(response.context['last_updated'], sensor_data.timestamp)

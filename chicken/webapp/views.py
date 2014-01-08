@@ -9,9 +9,11 @@ from webapp.models import SensorData
 
 
 def index(request):
+    latest_read = SensorData.objects.last()
     context = RequestContext(request, {
         'latest_question_list': None,
-        'chickens_put_away': not SensorData.objects.last().door_open
+        'chickens_put_away': not latest_read.door_open,
+        'last_updated': latest_read.timestamp
     })
 
     return render(request, 'webapp/index.html', context)
