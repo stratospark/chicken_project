@@ -1,18 +1,26 @@
-from datetime import datetime
+import logging
+from csv import reader
+
 from django.core.management.base import BaseCommand
 from django.db.utils import IntegrityError
-from csv import reader
-from pytz import timezone
 
 from webapp.models import SensorData
 
 
+logger = logging.getLogger(__name__)
+
+
 class Command(BaseCommand):
-    help = "My shiny new management command."
+    args = '<file_path>'
+    help = "Import SensorData from a specified log file"
 
     def handle(self, *args, **options):
         # TODO: don't hardcode path, load from relative path? or env variable?
-        chicken_file = open('/Users/patr/PycharmProjects/chicken_project/chickens.txt')
+        if len(args) > 0:
+            file_path = args[0]
+        else:
+            file_path = '../chickens.txt'
+        chicken_file = open(file_path)
         csv_reader = reader(chicken_file)
         for i, row in enumerate(csv_reader):
             s = SensorData.create_from_csv_row(row)
@@ -20,9 +28,7 @@ class Command(BaseCommand):
             try:
                 s.save()
             except IntegrityError as e:
-                print 'Skipping %s' % row
-                print e
-
+                logger.warning('Skipping %s, %s' % (row, e))
 
             if i % 100 == 0:
-                print 'Total Imported: %d' % i
+                logger.info('Total Imported: %d' % i)
