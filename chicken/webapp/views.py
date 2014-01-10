@@ -6,14 +6,18 @@ from django.shortcuts import render
 from django.template import loader, RequestContext
 from django.views.decorators.csrf import csrf_exempt
 from webapp.models import SensorData
+from webapp.utils import sunrise_and_sunset_for_date
 
 
 def index(request):
     latest_read = SensorData.objects.last()
+    sunrise, sunset = sunrise_and_sunset_for_date()
     context = RequestContext(request, {
         'latest_question_list': None,
         'chickens_put_away': not latest_read.door_open,
-        'last_updated': latest_read.timestamp
+        'last_updated': latest_read.timestamp,
+        'sunrise': sunrise,
+        'sunset': sunset
     })
 
     return render(request, 'webapp/index.html', context)
