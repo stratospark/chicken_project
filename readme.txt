@@ -1,0 +1,1 @@
+tdaemon --custom-args='--ds chicken.settings.base --cov-config .coveragerc --cov . --cov-report xml --color yes' -t py
