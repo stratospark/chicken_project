@@ -1,0 +1,50 @@
+html {
+    background: transparent;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Georgia';
+}
+
+body {
+    background: url("/images/chickens.jpg") no-repeat center center fixed;;
+    background-size: cover;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0
+}
+
+.pod {
+    font-size: 1.5em;
+    position: fixed;
+    width: 22em;
+    top: 6em;
+    right: 6em;
+    background-color: white;
+    border-radius: 16px;
+    opacity: .7;
+    padding: 10px;
+    color: black;
+}
+
+.pod .message {
+    text-align: center;
+}
+
+.pod .sig {
+    text-align: right;
+
+}
+
+.pod h1, h2, h3, h4, h5, h6 {
+    font-family: 'Georgia';
+    opacity: 1;
+}
+
+.status {
+    font-size: 0.6em;
+}
