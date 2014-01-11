@@ -13,7 +13,7 @@ angular.module('chickenFrontendApp')
     $http(method: 'GET', url: '/api/data').
       success (data, status, headers, config) ->
         console.log data
-        data.last_updated = Date.parse(data.last_updated).toString('M/d/yyyy @ h:mm tt')
+        data.last_updated = Date.parse(data.last_updated).setTimezone('UTC').toString('M/d/yyyy @ h:mm tt')
         data.sunrise = Date.parse(data.sunrise).toString('@ h:mm tt')
         data.sunset = Date.parse(data.sunset).toString('@ h:mm tt')
         $scope.data = data
