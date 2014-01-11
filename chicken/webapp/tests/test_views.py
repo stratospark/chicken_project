@@ -37,3 +37,9 @@ class ViewTests(TestCase):
         self.assertEqual(response.status_code , 200)
         self.assertEqual(response.context['chickens_put_away'], True)
         self.assertEqual(response.context['last_updated'], sensor_data.timestamp)
+
+    def test_data(self):
+        sensor_data = mommy.make('SensorData', door_open=False)
+        c = Client()
+        response = c.get('/api/data')
+        assert response

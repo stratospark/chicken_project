@@ -19,3 +19,7 @@ def sunrise_and_sunset_for_date(date=None):
     sunrise = ephem.localtime(home.next_rising(sun, start=date))
     sunset = ephem.localtime(home.next_setting(sun, start=date))
     return sunrise, sunset
+
+
+def date_handler(obj):
+    return obj.isoformat() if hasattr(obj, 'isoformat') else obj
