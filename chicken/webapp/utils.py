@@ -16,8 +16,8 @@ def sunrise_and_sunset_for_date(date=None):
 
     sun = ephem.Sun()
 
-    sunrise = ephem.localtime(home.next_rising(sun, start=date))
-    sunset = ephem.localtime(home.next_setting(sun, start=date))
+    sunrise = ephem.localtime(home.next_rising(sun, start=date)).replace(microsecond=0)
+    sunset = ephem.localtime(home.next_setting(sun, start=date)).replace(microsecond=0)
     return sunrise, sunset
 
 

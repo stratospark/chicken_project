@@ -1,19 +1,79 @@
-<div class="container-fluid">
-    <div class="row-fluid">
-        <div class="pod centering">
-            <p>A message from the chickens of Vegan Oasis:</p>
-            <h1 ng-show="!data.chickens_put_away" class="message">Close the coop, please!</h1>
+<style type="text/css">
 
-            <h1 ng-show="data.chickens_put_away" class="message">We're just chillin' in the coop.</h1>
-            <p class="sig">Love, <br/>Foxie and Feather</p>
+    html, body {
+        height: 100%;
+        font-family: 'Georgia';
+    }
 
-            <hr/>
+    .pod .message {
+        text-align: center;
+    }
 
-            <div class="status">
-                <p>Latest Data Received on {{ data.last_updated }}</p>
-                <p>Sunrise is at: {{ data.sunrise }}</p>
-                <p>Sunset is at: {{ data.sunset }}</p>
-            </div>
-        </div>
+    .pod .sig {
+        text-align: right;
+
+    }
+
+    .pod h1, h2, h3, h4, h5, h6 {
+        font-family: 'Georgia';
+        opacity: 1;
+    }
+
+    .status {
+        font-size: 0.8em;
+        line-height: 0.7em;
+    }
+
+    body {
+        background-color: #baf7ff;
+    }
+
+    .pod {
+        width: 100%;
+        position: absolute;
+        right: 0;
+        font-size: 1.5em;
+        border-radius: 16px;
+        opacity: 1.0;
+        padding: 10px;
+        color: black;
+        padding: 20px;
+    }
+
+    .pod p {
+        font-size: 0.8em;
+    }
+
+    #chickens {
+        width: 50%;
+        float: right;
+        margin-left: 20px;
+        border-radius: 16px;
+        border: 2px solid rgba(1, 1, 1, 0.9);
+    }
+
+    hr {
+        border-color: rgba(1, 1, 1, 0.9);
+    }
+</style>
+<div class="pod">
+    <img id="chickens" src="images/chickens.jpg"/>
+
+    <p>A message from the chickens of Vegan Oasis:</p>
+
+    <h1 ng-show="!data.chickens_put_away" class="message">Close the coop, please!</h1>
+
+    <h1 ng-show="data.chickens_put_away" class="message">We're just chillin' in the coop.</h1>
+
+    <p class="sig">Love,<br/>Foxie and Feather</p>
+
+    <hr/>
+
+    <div class="status">
+        <p><strong>Latest Data Received</strong> {{ data.last_updated }}</p>
+
+        <p><strong>Sunrise</strong> {{ data.sunrise }}</p>
+
+        <p><strong>Sunset</strong> {{ data.sunset }}</p>
     </div>
 </div>
