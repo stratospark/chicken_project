@@ -1,4 +1,5 @@
 from datetime import datetime
+import json
 import ephem
 import pytz
 
@@ -21,5 +22,27 @@ def sunrise_and_sunset_for_date(date=None):
     return sunrise, sunset
 
 
-def date_handler(obj):
+def _date_handler(obj):
     return obj.isoformat() if hasattr(obj, 'isoformat') else obj
+
+
+def our_json_dumps(data):
+    return json.dumps(data, default=_date_handler)
+
+
+def _load_with_datetime(pairs, format='%Y-%m-%d'):
+    """Load with dates"""
+    d = {}
+    for k, v in pairs:
+        if isinstance(v, basestring):
+            try:
+                d[k] = datetime.strptime(v, format).date()
+            except ValueError:
+                d[k] = v
+        else:
+            d[k] = v
+    return d
+
+
+def our_json_loads(data):
+    return json.loads(data, object_pairs_hook=_load_with_datetime)

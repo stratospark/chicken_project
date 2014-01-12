@@ -1,4 +1,3 @@
-import json
 from django.http import HttpResponse
 from django.shortcuts import render
 
@@ -6,7 +5,7 @@ from django.shortcuts import render
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
 from webapp.models import SensorData
-from webapp.utils import sunrise_and_sunset_for_date, date_handler
+from webapp.utils import sunrise_and_sunset_for_date, our_json_dumps
 
 
 def _populate_basic_data():
@@ -40,6 +39,5 @@ def add_data(request):
 
 @csrf_exempt
 def data(request):
-    data = _populate_basic_data()
-    json_data = json.dumps(data, default=date_handler)
+    json_data = our_json_dumps(_populate_basic_data())
     return HttpResponse(json_data)
