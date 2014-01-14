@@ -1,4 +1,3 @@
-from pandas import json
 from django.test import TestCase, Client
 from model_mommy import mommy
 from webapp.models import SensorData
