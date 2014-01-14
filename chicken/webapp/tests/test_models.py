@@ -1,4 +1,5 @@
 from django.test import TestCase
+from model_mommy.mommy import make
 from webapp.models import SensorData
 
 
@@ -29,3 +30,7 @@ class SensorDataTests(TestCase):
         self.assertEqual(sd.signal, -91)
         self.assertEqual(sd.door_open, True)
         self.assertEqual(sd.motion_sensed, True)
+
+    def test_get_latest(self):
+        _, _, latest = make(SensorData, 3)
+        assert SensorData.get_latest() == latest

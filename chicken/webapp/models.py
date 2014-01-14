@@ -39,6 +39,10 @@ class SensorData(models.Model):
                        motion_sensed=motion_sensed)
         return s
 
+    @classmethod
+    def get_latest(cls):
+        return SensorData.objects.last()
+
     def __unicode__(self):
         return '%s, Door Open: %s, Motion Sensed: %s' % (self.timestamp,
                                                          self.door_open,
