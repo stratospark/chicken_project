@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from django.test import TestCase
 from mock import patch
-from webapp.logic import ChickenLogic
+from webapp.logic import ChickenLogic, ChickenStatus
 from webapp.models import SensorData
 
 
@@ -36,28 +36,36 @@ class LogicTests(TestCase):
                                                                      mock_SensorData):
         self._setup_scenario(mock_datetime, mock_sunrise_sunset, mock_SensorData,
                              chickens_inside=True, door_open=False, now=LogicTests.TODAY_AFTER_SUNSET)
-        assert ChickenLogic.evaluate_situation() == ChickenLogic.GOOD #'Chickens are safely put away'
+        evaluation = ChickenLogic.evaluate_situation()
+        assert evaluation.status == ChickenStatus.GOOD
+        assert evaluation.message == ChickenStatus.ARE_PUT_AWAY
 
 
     def test_after_sunset_before_sunrise_chickens_outside_door_closed(self, mock_datetime, mock_sunrise_sunset,
                                                                       mock_SensorData):
         self._setup_scenario(mock_datetime, mock_sunrise_sunset, mock_SensorData,
                              chickens_inside=False, door_open=False, now=LogicTests.TODAY_AFTER_SUNSET)
-        assert ChickenLogic.evaluate_situation() == ChickenLogic.VERY_BAD #'very bad: find chickens and close the door!!!'
+        evaluation = ChickenLogic.evaluate_situation()
+        assert evaluation.status == ChickenStatus.VERY_BAD
+        assert evaluation.message == ChickenStatus.FIND_CHICKENS_CLOSE_DOOR
 
 
     def test_after_sunset_before_sunrise_chickens_inside_door_open(self, mock_datetime, mock_sunrise_sunset,
                                                                    mock_SensorData):
         self._setup_scenario(mock_datetime, mock_sunrise_sunset, mock_SensorData,
                              chickens_inside=True, door_open=True, now=LogicTests.TODAY_AFTER_SUNSET)
-        assert ChickenLogic.evaluate_situation() == ChickenLogic.VERY_BAD #'very bad: close the door!!!'
+        evaluation = ChickenLogic.evaluate_situation()
+        assert evaluation.status == ChickenStatus.VERY_BAD
+        assert evaluation.message == ChickenStatus.CLOSE_DOOR
 
 
     def test_after_sunset_before_sunrise_chickens_outside_door_open(self, mock_datetime, mock_sunrise_sunset,
                                                                     mock_SensorData):
         self._setup_scenario(mock_datetime, mock_sunrise_sunset, mock_SensorData,
                              chickens_inside=False, door_open=True, now=LogicTests.TODAY_AFTER_SUNSET)
-        assert ChickenLogic.evaluate_situation() == ChickenLogic.VERY_BAD # 'very bad: find chickens and close the door!!!'
+        evaluation = ChickenLogic.evaluate_situation()
+        assert evaluation.status == ChickenStatus.VERY_BAD
+        assert evaluation.message == ChickenStatus.FIND_CHICKENS_CLOSE_DOOR
 
 
     ### Group 2
@@ -65,25 +73,33 @@ class LogicTests(TestCase):
                                                                      mock_SensorData):
         self._setup_scenario(mock_datetime, mock_sunrise_sunset, mock_SensorData,
                              chickens_inside=True, door_open=False, now=LogicTests.TODAY_NOON)
-        assert ChickenLogic.evaluate_situation() == ChickenLogic.BAD # 'bad: open the door'
+        evaluation = ChickenLogic.evaluate_situation()
+        assert evaluation.status == ChickenStatus.BAD
+        assert evaluation.message == ChickenStatus.OPEN_DOOR
 
 
     def test_after_sunrise_before_sunset_chickens_outside_door_closed(self, mock_datetime, mock_sunrise_sunset,
                                                                       mock_SensorData):
         self._setup_scenario(mock_datetime, mock_sunrise_sunset, mock_SensorData,
                              chickens_inside=False, door_open=False, now=LogicTests.TODAY_NOON)
-        assert ChickenLogic.evaluate_situation() == ChickenLogic.BAD # 'slightly bad: open the door in case they want food or to nest'
+        evaluation = ChickenLogic.evaluate_situation()
+        assert evaluation.status == ChickenStatus.BAD
+        assert evaluation.message == ChickenStatus.OPEN_DOOR_FOR_NESTING
 
 
     def test_after_sunrise_before_sunset_chickens_inside_door_open(self, mock_datetime, mock_sunrise_sunset,
                                                                    mock_SensorData):
         self._setup_scenario(mock_datetime, mock_sunrise_sunset, mock_SensorData,
                              chickens_inside=True, door_open=True, now=LogicTests.TODAY_NOON)
-        assert ChickenLogic.evaluate_situation() == ChickenLogic.GOOD # 'good: Chickens may be nesting.'
+        evaluation = ChickenLogic.evaluate_situation()
+        assert evaluation.status == ChickenStatus.GOOD
+        assert evaluation.message == ChickenStatus.MAYBE_NESTING
 
 
     def test_after_sunrise_before_sunset_chickens_outside_door_open(self, mock_datetime, mock_sunrise_sunset,
                                                                     mock_SensorData):
         self._setup_scenario(mock_datetime, mock_sunrise_sunset, mock_SensorData,
                              chickens_inside=False, door_open=True, now=LogicTests.TODAY_NOON)
-        assert ChickenLogic.evaluate_situation() == ChickenLogic.GOOD # 'good: Chickens are enjoying the garden!'
+        evaluation = ChickenLogic.evaluate_situation()
+        assert evaluation.status == ChickenStatus.GOOD
+        assert evaluation.message == ChickenStatus.ENJOYING_GARDEN
