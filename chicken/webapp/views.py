@@ -4,6 +4,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
+from webapp.logic import ChickenLogic
 from webapp.models import SensorData
 from webapp.utils import sunrise_and_sunset_for_date, our_json_dumps
 
@@ -11,8 +12,10 @@ from webapp.utils import sunrise_and_sunset_for_date, our_json_dumps
 def _populate_basic_data():
     latest_read = SensorData.objects.last()
     sunrise, sunset = sunrise_and_sunset_for_date()
+    chicken_status = ChickenLogic.evaluate_situation()
     data = {'chickens_put_away': not latest_read.door_open,
-            'last_updated': latest_read.timestamp, 'sunrise': sunrise, 'sunset': sunset}
+            'last_updated': latest_read.timestamp, 'sunrise': sunrise, 'sunset': sunset,
+            'message': chicken_status.message}
     return data
 
 

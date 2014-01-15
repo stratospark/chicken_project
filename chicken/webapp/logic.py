@@ -13,7 +13,9 @@ class ChickenStatus(object):
     CLOSE_DOOR = 'Close the door! There might be opossums!'
     OPEN_DOOR = 'Hey, let us out!'
     OPEN_DOOR_FOR_NESTING = 'Hey, open the door in case we want to nest or eat!'
-    MAYBE_NESTING = 'Seems like a good time to nest?'
+    # TODO: detect possible nesting behavior using more than one data point
+    #MAYBE_NESTING = 'Seems like a good time to nest?'
+    MAYBE_NESTING = 'We love playing in the garden!'
     ENJOYING_GARDEN = 'We love playing in the garden!'
 
     def __init__(self, status, message):

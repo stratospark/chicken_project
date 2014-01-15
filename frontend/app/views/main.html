@@ -61,9 +61,7 @@
 
     <p>A message from the chickens of Vegan Oasis:</p>
 
-    <h1 ng-show="!data.chickens_put_away" class="message">Close the coop, please!</h1>
-
-    <h1 ng-show="data.chickens_put_away" class="message">We're just chillin' in the coop.</h1>
+    <h1 class="message">{{ data.message }}</h1>
 
     <p class="sig">Love,<br/>Foxie and Feather</p>
 
